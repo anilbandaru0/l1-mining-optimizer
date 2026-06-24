@@ -4,6 +4,26 @@ Autonomous Python backend for evaluating live Layer-1 mining profitability and h
 
 The prototype runs without external services by using deterministic simulated streams. Production integrations can replace the stream adapters and action scripts without changing the agent graph.
 
+## Project Blueprint
+
+**The Problem:** The profitability of mining dynamic Layer-1 blockchains like Pearl fluctuates wildly based on tokenomics, network difficulty, and real-time hardware energy costs. Miners usually have to stare at dashboards to make manual adjustments.
+
+**The Unique Twist:** Build an autonomous, agent-driven mining optimizer that controls hardware based on live data streams.
+
+**The Architecture:** The Python backend ingests two heavy data streams: live L1 blockchain metrics such as block rewards and difficulty, plus local hardware telemetry such as hashrate, GPU thermals, and wattage.
+
+**The AI Engine:** A multi-agent LangGraph-style setup powers decisions. The Financial Agent calculates real-time profit margins. The Operations Agent monitors hardware health.
+
+**The Action:** Instead of just showing a dashboard, the system can execute scripts to throttle hardware power limits or switch mining targets when an L1 stops being profitable.
+
+**Why It Wins:** It merges high-throughput data engineering with financial optimization and shows agents interacting directly with physical hardware and financial data streams.
+
+## Website
+
+The GitHub Pages site includes a GPU-based mining calculator. Users can select GPU profiles such as RTX 5090, RTX 4090, RTX 3090, RX 7900 XTX, or Custom GPU, then enter rig size, electricity cost, chain assumptions, and profit targets.
+
+The site can fetch live USD token prices from CoinGecko and compare demo mining targets such as Kaspa, Ravencoin, Ergo, Monero, Ethereum Classic, and Pearl. Network hashrate, rewards, difficulty, and GPU algorithm performance remain editable assumptions because exact mining profitability requires chain-specific telemetry and miner-specific benchmark data.
+
 ## Run the Demo
 
 ```powershell

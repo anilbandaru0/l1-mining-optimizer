@@ -48,6 +48,13 @@ button {
   margin-bottom: 24px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .eyebrow,
 .label {
   color: #88d8cc;
@@ -194,6 +201,10 @@ select {
   margin-bottom: 10px;
 }
 
+.target-panel h2 {
+  font-size: clamp(24px, 3vw, 34px);
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -255,7 +266,8 @@ dd {
 }
 
 .story,
-.gpu-table-panel {
+.gpu-table-panel,
+.target-table-panel {
   margin-top: 16px;
   padding: 20px;
 }
@@ -311,6 +323,10 @@ tbody tr {
 
 tbody tr:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+.selected-row {
+  background: rgba(103, 239, 163, 0.08);
 }
 
 @media (max-width: 940px) {

@@ -14,7 +14,10 @@
           <h1>GPU Mining Profit Optimizer</h1>
           <p class="intro">Pick a GPU model, enter your rig size and electricity cost, then estimate profit and see what the autonomous agents would do.</p>
         </div>
-        <button id="resetButton" type="button">Reset</button>
+        <div class="header-actions">
+          <button id="refreshPricesButton" type="button">Refresh Prices</button>
+          <button id="resetButton" type="button">Reset</button>
+        </div>
       </header>
 
       <section class="workspace">
@@ -91,10 +94,23 @@
 
           <div class="section-title">
             <h2>Chain Assumptions</h2>
-            <p>Use real values later, or keep these demo defaults</p>
+            <p>Prices can update live. Network metrics are editable demo assumptions.</p>
           </div>
 
           <div class="grid two">
+            <label class="wide">
+              Mining target
+              <select id="miningTarget">
+                <option value="auto">Auto select best target</option>
+                <option value="kaspa">Kaspa</option>
+                <option value="ravencoin">Ravencoin</option>
+                <option value="ergo">Ergo</option>
+                <option value="monero">Monero</option>
+                <option value="ethereumClassic">Ethereum Classic</option>
+                <option value="pearl">Pearl demo target</option>
+                <option value="custom">Custom target</option>
+              </select>
+            </label>
             <label>
               Token price
               <div class="input-row">
@@ -135,6 +151,7 @@
               </div>
             </label>
           </div>
+          <p class="note" id="priceStatus">Live prices load from CoinGecko when available. Custom/Pearl can use manual price.</p>
         </form>
 
         <section class="results">
@@ -142,6 +159,11 @@
             <p class="label">Autonomous Agent Recommendation</p>
             <h2 id="agentAction">Calculating...</h2>
             <p id="agentReason">Waiting for your rig values.</p>
+          </div>
+          <div class="panel decision target-panel">
+            <p class="label">Selected Mining Target</p>
+            <h2 id="selectedTarget">Auto</h2>
+            <p id="targetReason">Comparing live prices and estimated profitability.</p>
           </div>
 
           <div class="cards">
@@ -197,33 +219,33 @@
 
       <section class="panel story">
         <div class="section-title">
-          <h2>The Platform Idea</h2>
-          <p>This is the pitch behind the calculator and backend.</p>
+          <h2>Project Blueprint</h2>
+          <p>The Layer-1 Mining Profitability & Telemetry Orchestrator combines a GPU rig calculator, live telemetry concept, and autonomous agent actions.</p>
         </div>
         <div class="story-grid">
           <article>
             <h3>The Problem</h3>
-            <p>The profitability of mining dynamic Layer-1 blockchains like Pearl changes with token price, block reward, network difficulty, and real-time electricity cost.</p>
+            <p>The profitability of mining dynamic Layer-1 blockchains like Pearl fluctuates wildly based on tokenomics, network difficulty, and real-time hardware energy costs. Miners usually have to stare at dashboards to make manual adjustments.</p>
           </article>
           <article>
             <h3>The Unique Twist</h3>
-            <p>An autonomous agent-driven optimizer watches the numbers and recommends throttling power, switching targets, or stopping when mining becomes unprofitable.</p>
+            <p>Build an autonomous, agent-driven mining optimizer that controls hardware based on live data streams instead of only showing a static dashboard.</p>
           </article>
           <article>
             <h3>The Architecture</h3>
-            <p>A Python backend ingests two heavy streams: live L1 metrics and local hardware telemetry such as hashrate, GPU thermals, and wattage.</p>
+            <p>A Python backend ingests two heavy data streams: live L1 blockchain metrics like block rewards and difficulty, plus local hardware telemetry like hashrate, GPU thermals, and wattage.</p>
           </article>
           <article>
             <h3>The AI Engine</h3>
-            <p>A LangGraph-style multi-agent setup uses a Financial Agent for profit margins and an Operations Agent for hardware health.</p>
+            <p>A multi-agent LangGraph setup powers the decisions. The Financial Agent calculates real-time profit margins. The Operations Agent monitors hardware health.</p>
           </article>
           <article>
             <h3>The Action</h3>
-            <p>The system can execute safe scripts to throttle hardware power limits or switch mining targets when the L1 stops being profitable.</p>
+            <p>Instead of just showing a dashboard, the system autonomously executes scripts to throttle hardware power limits or switch mining targets the second an L1 stops being profitable.</p>
           </article>
           <article>
             <h3>Why It Wins</h3>
-            <p>It combines high-throughput data engineering, financial optimization, hardware telemetry, and agents that interact with real-world systems.</p>
+            <p>It merges high-throughput data engineering with financial optimization and shows agents interacting directly with physical hardware and financial data streams.</p>
           </article>
         </div>
       </section>
@@ -244,6 +266,26 @@
               </tr>
             </thead>
             <tbody id="gpuTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel target-table-panel">
+        <div class="section-title">
+          <h2>Live Target Comparison</h2>
+          <p>Live USD prices come from CoinGecko. Rewards, difficulty, and network hashrate are demo assumptions for comparing targets.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Target</th>
+                <th>Live Price</th>
+                <th>Est. Daily Profit</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="targetTable"></tbody>
           </table>
         </div>
       </section>
