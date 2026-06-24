@@ -1,7 +1,65 @@
+const gpuProfiles = {
+  rtx5090: {
+    name: "NVIDIA RTX 5090",
+    hashratePerGpu: 38,
+    wattsPerGpu: 300,
+    note: "High-end demo preset. Real RTX 5090 mining performance depends on the exact algorithm and power limit.",
+  },
+  rtx4090: {
+    name: "NVIDIA RTX 4090",
+    hashratePerGpu: 30,
+    wattsPerGpu: 260,
+    note: "Efficient high-end demo preset for a tuned RTX 4090.",
+  },
+  rtx4080super: {
+    name: "NVIDIA RTX 4080 Super",
+    hashratePerGpu: 22,
+    wattsPerGpu: 210,
+    note: "Upper-mid demo preset with lower power draw than 4090-class cards.",
+  },
+  rtx4070tisuper: {
+    name: "NVIDIA RTX 4070 Ti Super",
+    hashratePerGpu: 18,
+    wattsPerGpu: 170,
+    note: "Efficient demo preset for smaller rigs.",
+  },
+  rtx3090: {
+    name: "NVIDIA RTX 3090",
+    hashratePerGpu: 24,
+    wattsPerGpu: 285,
+    note: "Older high-end demo preset. Watch memory thermals on real cards.",
+  },
+  rtx3080: {
+    name: "NVIDIA RTX 3080",
+    hashratePerGpu: 19,
+    wattsPerGpu: 230,
+    note: "Older high-end demo preset with moderate efficiency.",
+  },
+  rx7900xtx: {
+    name: "AMD Radeon RX 7900 XTX",
+    hashratePerGpu: 20,
+    wattsPerGpu: 250,
+    note: "AMD high-end demo preset. Real values vary by miner and driver stack.",
+  },
+  rx7800xt: {
+    name: "AMD Radeon RX 7800 XT",
+    hashratePerGpu: 14,
+    wattsPerGpu: 170,
+    note: "AMD efficiency-focused demo preset.",
+  },
+  custom: {
+    name: "Custom GPU",
+    hashratePerGpu: 22,
+    wattsPerGpu: 180,
+    note: "Custom mode. Enter your own measured hashrate and wattage.",
+  },
+};
+
 const defaults = {
+  gpuModel: "rtx5090",
   gpuCount: 6,
-  hashratePerGpu: 22,
-  wattsPerGpu: 135,
+  hashratePerGpu: 38,
+  wattsPerGpu: 300,
   baseWatts: 120,
   electricityCost: 0.14,
   poolFee: 1,
@@ -29,6 +87,8 @@ const output = {
   efficiency: document.querySelector("#efficiency"),
   agentAction: document.querySelector("#agentAction"),
   agentReason: document.querySelector("#agentReason"),
+  gpuNote: document.querySelector("#gpuNote"),
+  gpuTable: document.querySelector("#gpuTable"),
   resetButton: document.querySelector("#resetButton"),
 };
 
@@ -47,12 +107,14 @@ function number(value, digits = 2) {
 }
 
 function readConfig() {
-  return Object.fromEntries(
+  const values = Object.fromEntries(
     ids.map((id) => {
+      if (id === "gpuModel") return [id, inputs[id].value];
       const value = Number(inputs[id].value);
       return [id, Number.isFinite(value) ? value : defaults[id]];
     }),
   );
+  return values;
 }
 
 function calculate(config) {
@@ -121,6 +183,7 @@ function render() {
   const config = readConfig();
   const result = calculate(config);
   const recommendation = decide(config, result);
+  const profile = gpuProfiles[config.gpuModel] || gpuProfiles.custom;
 
   output.totalHashrate.textContent = `${number(result.totalHashrate, 1)} TH/s`;
   output.totalWatts.textContent = `${number(result.totalWatts, 0)} W`;
@@ -135,6 +198,35 @@ function render() {
   output.agentAction.textContent = recommendation.action;
   output.agentAction.className = recommendation.className;
   output.agentReason.textContent = recommendation.reason;
+  output.gpuNote.textContent = profile.note;
+}
+
+function applyGpuProfile() {
+  const profile = gpuProfiles[inputs.gpuModel.value] || gpuProfiles.custom;
+  inputs.hashratePerGpu.value = profile.hashratePerGpu;
+  inputs.wattsPerGpu.value = profile.wattsPerGpu;
+  render();
+}
+
+function renderGpuTable() {
+  output.gpuTable.innerHTML = "";
+  Object.entries(gpuProfiles)
+    .filter(([id]) => id !== "custom")
+    .forEach(([id, profile]) => {
+      const efficiency = profile.wattsPerGpu / profile.hashratePerGpu;
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${profile.name}</td>
+        <td>${number(profile.hashratePerGpu, 1)} TH/s</td>
+        <td>${number(profile.wattsPerGpu, 0)} W</td>
+        <td>${number(efficiency, 2)} W per TH/s</td>
+      `;
+      row.addEventListener("click", () => {
+        inputs.gpuModel.value = id;
+        applyGpuProfile();
+      });
+      output.gpuTable.append(row);
+    });
 }
 
 function reset() {
@@ -148,6 +240,8 @@ ids.forEach((id) => {
   inputs[id].addEventListener("input", render);
 });
 
+inputs.gpuModel.addEventListener("change", applyGpuProfile);
 output.resetButton.addEventListener("click", reset);
 
+renderGpuTable();
 render();

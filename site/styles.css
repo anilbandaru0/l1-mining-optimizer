@@ -19,7 +19,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -149,6 +150,16 @@ input {
   padding: 10px 11px;
 }
 
+select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: #0a131b;
+  color: #f5f8fb;
+  min-height: 42px;
+  padding: 10px 11px;
+}
+
 .input-row {
   align-items: center;
   display: grid;
@@ -160,6 +171,17 @@ input {
   color: #9fb1bf;
   font-size: 13px;
   min-width: 52px;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.note {
+  color: #9fb1bf;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 12px 0 0;
 }
 
 .results {
@@ -232,10 +254,70 @@ dd {
   color: #67efa3;
 }
 
+.story,
+.gpu-table-panel {
+  margin-top: 16px;
+  padding: 20px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.story-grid article {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+}
+
+.story-grid h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.story-grid p {
+  color: #b6c5d1;
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  color: #88d8cc;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 @media (max-width: 940px) {
   .workspace,
   .cards,
-  .two {
+  .two,
+  .story-grid {
     grid-template-columns: 1fr;
   }
 

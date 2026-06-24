@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>L1 Mining Rig Profit Calculator</title>
+    <title>L1 Mining Profitability Orchestrator</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Layer-1 Mining Optimizer</p>
-          <h1>Rig Profit Calculator</h1>
-          <p class="intro">Enter your GPU setup, electricity price, and chain assumptions to estimate hourly, daily, and monthly mining profit.</p>
+          <p class="eyebrow">Layer-1 Mining Profitability & Telemetry Orchestrator</p>
+          <h1>GPU Mining Profit Optimizer</h1>
+          <p class="intro">Pick a GPU model, enter your rig size and electricity cost, then estimate profit and see what the autonomous agents would do.</p>
         </div>
         <button id="resetButton" type="button">Reset</button>
       </header>
@@ -25,6 +25,20 @@
           </div>
 
           <div class="grid two">
+            <label class="wide">
+              GPU model
+              <select id="gpuModel">
+                <option value="rtx5090">NVIDIA RTX 5090</option>
+                <option value="rtx4090">NVIDIA RTX 4090</option>
+                <option value="rtx4080super">NVIDIA RTX 4080 Super</option>
+                <option value="rtx4070tisuper">NVIDIA RTX 4070 Ti Super</option>
+                <option value="rtx3090">NVIDIA RTX 3090</option>
+                <option value="rtx3080">NVIDIA RTX 3080</option>
+                <option value="rx7900xtx">AMD Radeon RX 7900 XTX</option>
+                <option value="rx7800xt">AMD Radeon RX 7800 XT</option>
+                <option value="custom">Custom GPU</option>
+              </select>
+            </label>
             <label>
               Number of GPUs
               <input id="gpuCount" type="number" min="1" step="1" value="6" />
@@ -32,14 +46,14 @@
             <label>
               Hashrate per GPU
               <div class="input-row">
-                <input id="hashratePerGpu" type="number" min="0" step="0.1" value="22" />
+                <input id="hashratePerGpu" type="number" min="0" step="0.1" value="38" />
                 <span>TH/s</span>
               </div>
             </label>
             <label>
               Wattage per GPU
               <div class="input-row">
-                <input id="wattsPerGpu" type="number" min="0" step="1" value="135" />
+                <input id="wattsPerGpu" type="number" min="0" step="1" value="300" />
                 <span>W</span>
               </div>
             </label>
@@ -51,6 +65,7 @@
               </div>
             </label>
           </div>
+          <p class="note" id="gpuNote">Demo estimate for RTX 5090. Edit hashrate and wattage if your real rig is different.</p>
 
           <div class="section-title">
             <h2>Costs</h2>
@@ -178,6 +193,59 @@
             </dl>
           </div>
         </section>
+      </section>
+
+      <section class="panel story">
+        <div class="section-title">
+          <h2>The Platform Idea</h2>
+          <p>This is the pitch behind the calculator and backend.</p>
+        </div>
+        <div class="story-grid">
+          <article>
+            <h3>The Problem</h3>
+            <p>The profitability of mining dynamic Layer-1 blockchains like Pearl changes with token price, block reward, network difficulty, and real-time electricity cost.</p>
+          </article>
+          <article>
+            <h3>The Unique Twist</h3>
+            <p>An autonomous agent-driven optimizer watches the numbers and recommends throttling power, switching targets, or stopping when mining becomes unprofitable.</p>
+          </article>
+          <article>
+            <h3>The Architecture</h3>
+            <p>A Python backend ingests two heavy streams: live L1 metrics and local hardware telemetry such as hashrate, GPU thermals, and wattage.</p>
+          </article>
+          <article>
+            <h3>The AI Engine</h3>
+            <p>A LangGraph-style multi-agent setup uses a Financial Agent for profit margins and an Operations Agent for hardware health.</p>
+          </article>
+          <article>
+            <h3>The Action</h3>
+            <p>The system can execute safe scripts to throttle hardware power limits or switch mining targets when the L1 stops being profitable.</p>
+          </article>
+          <article>
+            <h3>Why It Wins</h3>
+            <p>It combines high-throughput data engineering, financial optimization, hardware telemetry, and agents that interact with real-world systems.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel gpu-table-panel">
+        <div class="section-title">
+          <h2>GPU Presets</h2>
+          <p>These are demo estimates for this calculator. Real values depend on the mining algorithm, drivers, clocks, and power limit.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>GPU</th>
+                <th>Hashrate</th>
+                <th>Watts</th>
+                <th>Efficiency</th>
+              </tr>
+            </thead>
+            <tbody id="gpuTable"></tbody>
+          </table>
+        </div>
       </section>
     </main>
 
