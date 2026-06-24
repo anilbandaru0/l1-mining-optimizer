@@ -553,8 +553,9 @@ function calculate(config) {
   const totalWatts = config.gpuCount * metrics.watts + config.baseWatts;
   const blocksPerDay = 86400 / Math.max(config.blockTime, 1);
   const minerShare = totalHashrate / Math.max(config.networkHashrate, 1);
-  const difficultyPenalty = 1 / Math.max(config.difficulty, 0.1);
-  const tokensPerDay = minerShare * config.blockReward * blocksPerDay * difficultyPenalty;
+  // Use network-hashrate share for reward estimates. Difficulty is displayed as telemetry;
+  // using both net hash and difficulty here would double-count network hardness.
+  const tokensPerDay = minerShare * config.blockReward * blocksPerDay;
   const grossRevenue = tokensPerDay * config.tokenPrice;
   const poolFeeCost = grossRevenue * (config.poolFee / 100);
   const dailyRevenue = grossRevenue - poolFeeCost;

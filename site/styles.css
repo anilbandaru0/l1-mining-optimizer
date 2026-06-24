@@ -234,6 +234,13 @@ select {
   margin: 12px 0 0;
 }
 
+.formula-note {
+  color: #88d8cc;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 8px 0 0;
+}
+
 .results {
   display: grid;
   gap: 16px;
