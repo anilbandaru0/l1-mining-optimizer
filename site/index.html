@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>L1 Mining Optimizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">Agent-driven mining telemetry</p>
+          <h1>Layer-1 Mining Optimizer</h1>
+        </div>
+        <button id="toggleButton" type="button">Pause</button>
+      </section>
+
+      <section class="metrics" aria-label="Live mining metrics">
+        <article>
+          <span>Token Price</span>
+          <strong id="price">$0.000</strong>
+        </article>
+        <article>
+          <span>Difficulty</span>
+          <strong id="difficulty">0.00</strong>
+        </article>
+        <article>
+          <span>Hashrate</span>
+          <strong id="hashrate">0 TH/s</strong>
+        </article>
+        <article>
+          <span>GPU Temp</span>
+          <strong id="gpuTemp">0C</strong>
+        </article>
+        <article>
+          <span>Wattage</span>
+          <strong id="wattage">0W</strong>
+        </article>
+        <article>
+          <span>Margin</span>
+          <strong id="margin">$0/hr</strong>
+        </article>
+      </section>
+
+      <section class="decision-panel">
+        <div>
+          <p class="label">Final Agent Action</p>
+          <h2 id="action">Starting...</h2>
+          <p id="reason">Waiting for telemetry.</p>
+        </div>
+        <div class="status" id="status">LIVE</div>
+      </section>
+
+      <section class="agents">
+        <article>
+          <h3>Financial Agent</h3>
+          <p id="financialAgent">Calculating profitability...</p>
+        </article>
+        <article>
+          <h3>Operations Agent</h3>
+          <p id="operationsAgent">Checking hardware health...</p>
+        </article>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Action Log</h2>
+          <button id="clearButton" type="button">Clear</button>
+        </div>
+        <ol id="log" class="log"></ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
