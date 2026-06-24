@@ -27,12 +27,12 @@ The mock scripts do not touch real hardware. They only append to log files.
 
 ## Website Demo
 
-The `site/` folder contains a static browser demo. You can push this repo to GitHub and deploy `site/` with GitHub Pages, Netlify, or Vercel.
+The `docs/` folder contains the GitHub Pages website. GitHub Pages offers `/root` and `/docs`, so choose `/docs` when deploying.
 
 Open locally:
 
 ```powershell
-cd work\site
+cd work\docs
 start index.html
 ```
 
