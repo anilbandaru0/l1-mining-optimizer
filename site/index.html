@@ -242,9 +242,34 @@
                 <dt>Power efficiency</dt>
                 <dd id="efficiency">0 W per TH/s</dd>
               </div>
+              <div>
+                <dt>AI telemetry signal</dt>
+                <dd id="aiTelemetrySignal">Traditional hash workload</dd>
+              </div>
             </dl>
           </div>
         </section>
+      </section>
+
+      <section class="panel ai-compute-panel">
+        <div class="section-title">
+          <h2>AI-Compute Mining Telemetry</h2>
+          <p>Pearl and Keryx-style networks need tensor, VRAM, CUDA utilization, and power-spike monitoring rather than a single flat hashrate number.</p>
+        </div>
+        <div class="ai-grid">
+          <article>
+            <h3>Pearl Matrix Math</h3>
+            <p>Proof-of-Useful-Work style matrix multiplication is modeled as tensor throughput. RTX 5090 defaults are tuned near the recent public estimate of roughly $17/day gross revenue before local electricity and pool costs.</p>
+          </article>
+          <article>
+            <h3>Keryx Proof-of-Model</h3>
+            <p>Keryx is represented as a VRAM-tiered demo target. Higher VRAM cards earn better effective throughput because model weights can stay resident during inference bursts.</p>
+          </article>
+          <article>
+            <h3>Telemetry Challenge</h3>
+            <p>The Operations Agent should watch VRAM allocation, CUDA compute utilization, hotspot temperature, and wattage spikes when live inference tasks hit the rig.</p>
+          </article>
+        </div>
       </section>
 
       <section class="panel gpu-table-panel">
@@ -324,6 +349,10 @@
           <article>
             <h3>Why It Wins</h3>
             <p>It merges high-throughput data engineering with financial optimization and shows agents interacting directly with physical hardware and financial data streams.</p>
+          </article>
+          <article>
+            <h3>New AI Mining Telemetry</h3>
+            <p>AI-compute chains change the core metric from simple hashrate to tensor throughput, VRAM residency, CUDA utilization, and fast thermal response during inference spikes.</p>
           </article>
         </div>
       </section>

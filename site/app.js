@@ -1,6 +1,7 @@
 const gpuProfiles = {
   rtx5090: {
     name: "NVIDIA RTX 5090",
+    vramGb: 32,
     hashratePerGpu: 38,
     wattsPerGpu: 300,
     note: "High-end demo preset. Real RTX 5090 mining performance depends on the exact algorithm and power limit.",
@@ -65,10 +66,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 92, unit: "GH/s", watts: 285 },
     KawPow: { hashrate: 82, unit: "MH/s", watts: 310 },
     Etchash: { hashrate: 160, unit: "MH/s", watts: 290 },
-    Pearl: { hashrate: 48, unit: "GH/s", watts: 300 },
+    Pearl: { hashrate: 100, unit: "matrix index", watts: 300, tensorTflops: 1650, cudaUtilization: 94 },
+    ProofOfModel: { hashrate: 100, unit: "inference index", watts: 320, vramTier: "32 GB top tier", cudaUtilization: 96 },
   },
   rtx4090: {
     name: "NVIDIA RTX 4090",
+    vramGb: 24,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 66, unit: "MH/s", watts: 280 },
     kHeavyHash: { hashrate: 2.55, unit: "GH/s", watts: 225 },
@@ -76,10 +79,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 78, unit: "GH/s", watts: 255 },
     KawPow: { hashrate: 70, unit: "MH/s", watts: 285 },
     Etchash: { hashrate: 132, unit: "MH/s", watts: 255 },
-    Pearl: { hashrate: 41, unit: "GH/s", watts: 245 },
+    Pearl: { hashrate: 72, unit: "matrix index", watts: 245, tensorTflops: 1050, cudaUtilization: 91 },
+    ProofOfModel: { hashrate: 76, unit: "inference index", watts: 275, vramTier: "24 GB high tier", cudaUtilization: 92 },
   },
   rtx4080super: {
     name: "NVIDIA RTX 4080 Super",
+    vramGb: 16,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 52, unit: "MH/s", watts: 235 },
     kHeavyHash: { hashrate: 1.85, unit: "GH/s", watts: 190 },
@@ -87,10 +92,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 58, unit: "GH/s", watts: 215 },
     KawPow: { hashrate: 54, unit: "MH/s", watts: 235 },
     Etchash: { hashrate: 105, unit: "MH/s", watts: 220 },
-    Pearl: { hashrate: 32, unit: "GH/s", watts: 210 },
+    Pearl: { hashrate: 50, unit: "matrix index", watts: 210, tensorTflops: 720, cudaUtilization: 88 },
+    ProofOfModel: { hashrate: 42, unit: "inference index", watts: 230, vramTier: "16 GB mid tier", cudaUtilization: 86 },
   },
   rtx4070tisuper: {
     name: "NVIDIA RTX 4070 Ti Super",
+    vramGb: 16,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 43, unit: "MH/s", watts: 190 },
     kHeavyHash: { hashrate: 1.45, unit: "GH/s", watts: 155 },
@@ -98,10 +105,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 47, unit: "GH/s", watts: 175 },
     KawPow: { hashrate: 45, unit: "MH/s", watts: 190 },
     Etchash: { hashrate: 85, unit: "MH/s", watts: 175 },
-    Pearl: { hashrate: 25, unit: "GH/s", watts: 170 },
+    Pearl: { hashrate: 39, unit: "matrix index", watts: 170, tensorTflops: 540, cudaUtilization: 86 },
+    ProofOfModel: { hashrate: 36, unit: "inference index", watts: 190, vramTier: "16 GB mid tier", cudaUtilization: 84 },
   },
   rtx3090: {
     name: "NVIDIA RTX 3090",
+    vramGb: 24,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 48, unit: "MH/s", watts: 330 },
     kHeavyHash: { hashrate: 1.2, unit: "GH/s", watts: 245 },
@@ -109,10 +118,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 44, unit: "GH/s", watts: 285 },
     KawPow: { hashrate: 58, unit: "MH/s", watts: 335 },
     Etchash: { hashrate: 122, unit: "MH/s", watts: 300 },
-    Pearl: { hashrate: 22, unit: "GH/s", watts: 285 },
+    Pearl: { hashrate: 34, unit: "matrix index", watts: 285, tensorTflops: 360, cudaUtilization: 82 },
+    ProofOfModel: { hashrate: 52, unit: "inference index", watts: 330, vramTier: "24 GB high tier", cudaUtilization: 83 },
   },
   rtx3080: {
     name: "NVIDIA RTX 3080",
+    vramGb: 10,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 38, unit: "MH/s", watts: 270 },
     kHeavyHash: { hashrate: 0.95, unit: "GH/s", watts: 210 },
@@ -120,10 +131,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 34, unit: "GH/s", watts: 240 },
     KawPow: { hashrate: 47, unit: "MH/s", watts: 275 },
     Etchash: { hashrate: 98, unit: "MH/s", watts: 230 },
-    Pearl: { hashrate: 18, unit: "GH/s", watts: 225 },
+    Pearl: { hashrate: 28, unit: "matrix index", watts: 225, tensorTflops: 290, cudaUtilization: 80 },
+    ProofOfModel: { hashrate: 16, unit: "inference index", watts: 250, vramTier: "10 GB low tier", cudaUtilization: 78 },
   },
   rx7900xtx: {
     name: "AMD Radeon RX 7900 XTX",
+    vramGb: 24,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 42, unit: "MH/s", watts: 285 },
     kHeavyHash: { hashrate: 1.35, unit: "GH/s", watts: 235 },
@@ -131,10 +144,12 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 45, unit: "GH/s", watts: 260 },
     KawPow: { hashrate: 49, unit: "MH/s", watts: 285 },
     Etchash: { hashrate: 105, unit: "MH/s", watts: 255 },
-    Pearl: { hashrate: 24, unit: "GH/s", watts: 250 },
+    Pearl: { hashrate: 31, unit: "matrix index", watts: 250, tensorTflops: 320, cudaUtilization: 0 },
+    ProofOfModel: { hashrate: 45, unit: "inference index", watts: 285, vramTier: "24 GB high VRAM tier", cudaUtilization: 0 },
   },
   rx7800xt: {
     name: "AMD Radeon RX 7800 XT",
+    vramGb: 16,
     RandomX: { hashrate: 0, unit: "kH/s", watts: 0, note: "RandomX is CPU-focused; use host CPU metrics." },
     MeowPow: { hashrate: 31, unit: "MH/s", watts: 205 },
     kHeavyHash: { hashrate: 0.98, unit: "GH/s", watts: 165 },
@@ -142,7 +157,8 @@ const gpuAlgorithmProfiles = {
     FishHash: { hashrate: 33, unit: "GH/s", watts: 185 },
     KawPow: { hashrate: 35, unit: "MH/s", watts: 205 },
     Etchash: { hashrate: 75, unit: "MH/s", watts: 180 },
-    Pearl: { hashrate: 17, unit: "GH/s", watts: 175 },
+    Pearl: { hashrate: 22, unit: "matrix index", watts: 175, tensorTflops: 230, cudaUtilization: 0 },
+    ProofOfModel: { hashrate: 28, unit: "inference index", watts: 205, vramTier: "16 GB mid VRAM tier", cudaUtilization: 0 },
   },
 };
 
@@ -150,18 +166,19 @@ const miningTargets = {
   keryx: {
     name: "Keryx",
     tag: "KRX",
-    algorithm: "KeryxHash",
-    profileAlgorithm: "Karlsenhashv2",
+    algorithm: "Proof-of-Model",
+    profileAlgorithm: "ProofOfModel",
     coingeckoId: null,
     exchange: "Nonkyc",
-    exchangeRateBtc: 0.00000001,
-    blockReward: 4.76,
-    blockTime: 0.1,
-    networkHashrate: 931.97,
-    networkHashrateLabel: "931.97 Gh/s",
-    difficulty: 46645,
-    difficultyLabel: "46,645M",
-    gpuMultiplier: 18.4,
+    exchangeRateBtc: 0.00000024,
+    blockReward: 1,
+    blockTime: 60,
+    networkHashrate: 6800,
+    networkHashrateLabel: "6,800 inference-index",
+    difficulty: 1,
+    difficultyLabel: "VRAM-tiered",
+    gpuMultiplier: 1,
+    aiWorkload: "VRAM-resident model inference",
   },
   pearl: {
     name: "Pearl",
@@ -170,14 +187,15 @@ const miningTargets = {
     profileAlgorithm: "Pearl",
     coingeckoId: null,
     exchange: "SafeTrade",
-    exchangeRateBtc: 0.00001119,
-    blockReward: 2576.85,
-    blockTime: 193,
-    networkHashrate: 29629060000,
-    networkHashrateLabel: "29,629.06 Ph/s",
-    difficulty: 20315869.375,
-    difficultyLabel: "20,315,869.375",
+    exchangeRateBtc: 0.0000001,
+    blockReward: 1,
+    blockTime: 86400,
+    networkHashrate: 3560,
+    networkHashrateLabel: "3,560 matrix-index",
+    difficulty: 1,
+    difficultyLabel: "matrix math load",
     gpuMultiplier: 1.0,
+    aiWorkload: "PoUW matrix multiplication",
   },
   qubitcoin: {
     name: "Qubitcoin",
@@ -450,6 +468,7 @@ const output = {
   revenueAfterFee: document.querySelector("#revenueAfterFee"),
   breakEvenPower: document.querySelector("#breakEvenPower"),
   efficiency: document.querySelector("#efficiency"),
+  aiTelemetrySignal: document.querySelector("#aiTelemetrySignal"),
   agentAction: document.querySelector("#agentAction"),
   agentReason: document.querySelector("#agentReason"),
   gpuNote: document.querySelector("#gpuNote"),
@@ -545,6 +564,21 @@ function getGpuMetrics(gpuModel, algorithm) {
     watts: Number(inputs.wattsPerGpu.value) || 0,
     note: `No ${algorithm} preset found for ${profile.name}. Using manual fields.`,
   };
+}
+
+function describeAiTelemetry(gpuModel, config, result) {
+  const profile = gpuAlgorithmProfiles[gpuModel] || gpuAlgorithmProfiles.rtx4090;
+  const metrics = getGpuMetrics(gpuModel, config.profileAlgorithm || config.algorithm);
+  if (config.profileAlgorithm === "Pearl") {
+    return `Pearl matrix load: ${number(metrics.tensorTflops || 0, 0)} tensor TFLOPS index, ${number(metrics.cudaUtilization || 0, 0)}% CUDA target, ${number(result.totalWatts, 0)}W spike budget`;
+  }
+  if (config.profileAlgorithm === "ProofOfModel") {
+    return `Keryx PoM: ${profile.vramGb || 0}GB VRAM, ${metrics.vramTier || "custom tier"}, ${number(metrics.cudaUtilization || 0, 0)}% compute burst`;
+  }
+  if (config.profileAlgorithm === "RandomX") {
+    return "RandomX is CPU-focused; GPU hashrate is treated as zero unless custom metrics are entered.";
+  }
+  return `Traditional ${config.algorithm} mining: ${number(result.totalHashrate, 2)} ${result.algorithmUnit}, ${number(result.totalWatts, 0)}W`;
 }
 
 function calculate(config) {
@@ -669,6 +703,7 @@ function render() {
   output.revenueAfterFee.textContent = `${money(result.dailyRevenue)}/day`;
   output.breakEvenPower.textContent = `${money(result.breakEvenPower)}/kWh`;
   output.efficiency.textContent = `${number(result.efficiency, 2)} W per ${result.algorithmUnit}`;
+  output.aiTelemetrySignal.textContent = describeAiTelemetry(config.gpuModel, activeConfig, result);
   output.agentAction.textContent = recommendation.action;
   output.agentAction.className = recommendation.className;
   output.agentReason.textContent = recommendation.reason;
@@ -811,6 +846,7 @@ function updateProfitabilityTable() {
     output.revenueAfterFee.textContent = `${money(best.result.dailyRevenue)}/day`;
     output.breakEvenPower.textContent = `${money(best.result.breakEvenPower)}/kWh`;
     output.efficiency.textContent = `${number(best.result.efficiency, 2)} W per ${best.result.algorithmUnit}`;
+    output.aiTelemetrySignal.textContent = describeAiTelemetry(baseConfig.gpuModel, best.config, best.result);
   }
 }
 
@@ -934,11 +970,11 @@ function logAgentAction(agentName, actionText, severity = "info") {
 
 function startMockAgentDecisionLoop() {
   const decisions = [
-    ["Financial Agent", "Calculated margin from live token price and network difficulty.", "info"],
-    ["Operations Agent", "GPU telemetry normal. Holding current power limit.", "info"],
-    ["Financial Agent", "Pearl dropped below profit target. Evaluating target switch.", "warning"],
-    ["Operations Agent", "GPU temperature crossed 80C. THROTTLING POWER LIMIT.", "critical"],
-    ["Financial Agent", "Auto-selected highest estimated profit target from ranking table.", "info"],
+    ["Financial Agent", "Calculated margin from live token price, block rewards, and network load.", "info"],
+    ["Operations Agent", "Telemetry normal: VRAM allocation stable and wattage inside envelope.", "info"],
+    ["Financial Agent", "Pearl matrix workload repriced after difficulty and exchange-rate shift.", "warning"],
+    ["Operations Agent", "Inference burst detected: CUDA utilization and hotspot temperature spiked. THROTTLING POWER LIMIT.", "critical"],
+    ["Financial Agent", "Auto-selected highest estimated net profit target after algorithm-specific GPU metrics.", "info"],
   ];
 
   let index = 0;

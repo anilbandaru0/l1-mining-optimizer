@@ -28,6 +28,8 @@ WhatToMine's documented API requires an API token for calculation endpoints, so 
 
 The frontend now uses algorithm-specific GPU profiles instead of one flat hashrate. For example, the same RTX 4090 has different demo metrics for KawPow, kHeavyHash, FishHash, Etchash, Pearl, and RandomX. RandomX is treated as CPU-focused, so GPU hashrate is set to zero unless the user chooses custom metrics.
 
+Pearl and Keryx-style AI-compute mining are modeled differently from traditional hash algorithms. Pearl uses a matrix/tensor throughput index calibrated around public RTX 5090 revenue estimates from the early Pearl mining rush. Keryx is represented as a VRAM-tiered Proof-of-Model demo target where 24 GB to 32 GB cards receive higher effective throughput because model weights can remain resident during inference bursts. These AI-compute targets also surface telemetry signals such as VRAM tier, CUDA utilization, tensor load, hotspot risk, and wattage spikes.
+
 ## Run the Demo
 
 ```powershell

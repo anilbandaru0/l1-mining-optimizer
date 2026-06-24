@@ -316,11 +316,36 @@ dd {
 }
 
 .story,
+.ai-compute-panel,
 .gpu-table-panel,
 .target-table-panel,
 .agent-console-panel {
   margin-top: 16px;
   padding: 20px;
+}
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ai-grid article {
+  background: rgba(2, 7, 10, 0.42);
+  border: 1px solid rgba(136, 216, 204, 0.13);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.ai-grid h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.ai-grid p {
+  color: #b6c5d1;
+  line-height: 1.45;
+  margin-bottom: 0;
 }
 
 .top-console {
@@ -486,6 +511,7 @@ tbody tr:hover {
   .agent-top-grid,
   .cards,
   .two,
+  .ai-grid,
   .story-grid {
     grid-template-columns: 1fr;
   }
