@@ -1,140 +1,153 @@
-const state = {
-  tick: 0,
-  running: true,
-  minMargin: 15,
-  thermalLimit: 82,
-  criticalThermalLimit: 98,
-  fallbackTarget: "pearl-low-diff",
+const defaults = {
+  gpuCount: 6,
+  hashratePerGpu: 22,
+  wattsPerGpu: 135,
+  baseWatts: 120,
+  electricityCost: 0.14,
+  poolFee: 1,
+  tokenPrice: 0.72,
+  blockReward: 4,
+  blockTime: 12,
+  networkHashrate: 9000,
+  difficulty: 1.15,
+  minProfit: 5,
 };
 
-const elements = {
-  price: document.querySelector("#price"),
-  difficulty: document.querySelector("#difficulty"),
-  hashrate: document.querySelector("#hashrate"),
-  gpuTemp: document.querySelector("#gpuTemp"),
-  wattage: document.querySelector("#wattage"),
-  margin: document.querySelector("#margin"),
-  action: document.querySelector("#action"),
-  reason: document.querySelector("#reason"),
-  financialAgent: document.querySelector("#financialAgent"),
-  operationsAgent: document.querySelector("#operationsAgent"),
-  log: document.querySelector("#log"),
-  status: document.querySelector("#status"),
-  toggleButton: document.querySelector("#toggleButton"),
-  clearButton: document.querySelector("#clearButton"),
+const ids = Object.keys(defaults);
+const inputs = Object.fromEntries(ids.map((id) => [id, document.querySelector(`#${id}`)]));
+
+const output = {
+  totalHashrate: document.querySelector("#totalHashrate"),
+  totalWatts: document.querySelector("#totalWatts"),
+  dailyRevenue: document.querySelector("#dailyRevenue"),
+  dailyEnergy: document.querySelector("#dailyEnergy"),
+  dailyProfit: document.querySelector("#dailyProfit"),
+  monthlyProfit: document.querySelector("#monthlyProfit"),
+  tokensPerDay: document.querySelector("#tokensPerDay"),
+  revenueAfterFee: document.querySelector("#revenueAfterFee"),
+  breakEvenPower: document.querySelector("#breakEvenPower"),
+  efficiency: document.querySelector("#efficiency"),
+  agentAction: document.querySelector("#agentAction"),
+  agentReason: document.querySelector("#agentReason"),
+  resetButton: document.querySelector("#resetButton"),
 };
 
-function wave(value, size) {
-  return Math.sin(state.tick / value) * size;
+function money(value) {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  });
 }
 
-function telemetry() {
-  const heatSpike = state.tick >= 5 && state.tick <= 7 ? 11 : 0;
-  const wattSpike = state.tick >= 6 && state.tick <= 7 ? 180 : 0;
+function number(value, digits = 2) {
+  return value.toLocaleString("en-US", {
+    maximumFractionDigits: digits,
+  });
+}
+
+function readConfig() {
+  return Object.fromEntries(
+    ids.map((id) => {
+      const value = Number(inputs[id].value);
+      return [id, Number.isFinite(value) ? value : defaults[id]];
+    }),
+  );
+}
+
+function calculate(config) {
+  const totalHashrate = config.gpuCount * config.hashratePerGpu;
+  const totalWatts = config.gpuCount * config.wattsPerGpu + config.baseWatts;
+  const blocksPerDay = 86400 / Math.max(config.blockTime, 1);
+  const minerShare = totalHashrate / Math.max(config.networkHashrate, 1);
+  const difficultyPenalty = 1 / Math.max(config.difficulty, 0.1);
+  const tokensPerDay = minerShare * config.blockReward * blocksPerDay * difficultyPenalty;
+  const grossRevenue = tokensPerDay * config.tokenPrice;
+  const poolFeeCost = grossRevenue * (config.poolFee / 100);
+  const dailyRevenue = grossRevenue - poolFeeCost;
+  const dailyEnergy = (totalWatts / 1000) * 24 * config.electricityCost;
+  const dailyProfit = dailyRevenue - dailyEnergy;
+  const monthlyProfit = dailyProfit * 30;
+  const breakEvenPower =
+    totalWatts > 0 ? dailyRevenue / ((totalWatts / 1000) * 24) : 0;
+  const efficiency = totalHashrate > 0 ? totalWatts / totalHashrate : 0;
+
   return {
-    price: Math.max(0.05, 0.72 + wave(3, 0.18)),
-    difficulty: Math.max(0.8, 1.15 + Math.cos(state.tick / 4) * 0.22),
-    hashrate: Math.max(1, 132 + wave(2, 8)),
-    gpuTemp: 72 + heatSpike + wave(2.5, 4),
-    hotspot: 81 + heatSpike + wave(2, 5),
-    wattage: 810 + wattSpike,
+    totalHashrate,
+    totalWatts,
+    tokensPerDay,
+    dailyRevenue,
+    dailyEnergy,
+    dailyProfit,
+    monthlyProfit,
+    breakEvenPower,
+    efficiency,
   };
 }
 
-function estimateProfit(data) {
-  const blocksPerHour = 3600 / 12;
-  const minerShare = data.hashrate / 9000;
-  const expectedTokens = minerShare * 4 * blocksPerHour * (1 / data.difficulty);
-  const revenue = expectedTokens * data.price;
-  const energyCost = (data.wattage / 1000) * 0.14;
-  return revenue - energyCost;
-}
-
-function decide(data, margin) {
-  const financial =
-    margin < state.minMargin
-      ? {
-          action: "SWITCH TARGET",
-          reason: `Margin $${margin.toFixed(2)}/hr is below $${state.minMargin.toFixed(2)}/hr. Switch to ${state.fallbackTarget}.`,
-          priority: 50,
-          className: "warn",
-        }
-      : {
-          action: "HOLD",
-          reason: `Margin $${margin.toFixed(2)}/hr remains profitable.`,
-          priority: 10,
-          className: "good",
-        };
-
-  const operations =
-    data.hotspot >= state.criticalThermalLimit
-      ? {
-          action: "SHUTDOWN MINER",
-          reason: `Hotspot ${data.hotspot.toFixed(1)}C exceeds critical limit.`,
-          priority: 100,
-          className: "danger",
-        }
-      : data.gpuTemp >= state.thermalLimit || data.wattage > 950
-        ? {
-            action: "THROTTLE POWER",
-            reason: `GPU ${data.gpuTemp.toFixed(1)}C or ${data.wattage.toFixed(0)}W exceeds safe envelope.`,
-            priority: 80,
-            className: "warn",
-          }
-        : {
-            action: "HOLD",
-            reason: "Hardware telemetry is inside the operating envelope.",
-            priority: 10,
-            className: "good",
-          };
-
-  const finalDecision = operations.priority > financial.priority ? operations : financial;
-  return { financial, operations, finalDecision };
-}
-
-function addLog(decision, data, margin) {
-  const item = document.createElement("li");
-  item.innerHTML = `<strong class="${decision.className}">${decision.action}</strong> at tick ${state.tick}: ${decision.reason} Margin $${margin.toFixed(2)}/hr, GPU ${data.gpuTemp.toFixed(1)}C, ${data.wattage.toFixed(0)}W.`;
-  elements.log.prepend(item);
-
-  while (elements.log.children.length > 8) {
-    elements.log.lastElementChild.remove();
+function decide(config, result) {
+  if (result.dailyProfit < 0) {
+    return {
+      action: "UNPROFITABLE: STOP OR SWITCH",
+      className: "danger",
+      reason: `This rig is losing ${money(Math.abs(result.dailyProfit))} per day at ${money(config.electricityCost)}/kWh. Switch target, reduce power, or do not mine.`,
+    };
   }
+
+  if (result.dailyProfit < config.minProfit) {
+    return {
+      action: "LOW PROFIT: OPTIMIZE",
+      className: "warn",
+      reason: `Profit is ${money(result.dailyProfit)} per day, below your ${money(config.minProfit)} target. Lower wattage, find cheaper power, or mine a better target.`,
+    };
+  }
+
+  if (result.efficiency > 8) {
+    return {
+      action: "PROFITABLE BUT INEFFICIENT",
+      className: "warn",
+      reason: `The rig is profitable, but efficiency is ${number(result.efficiency)} W per TH/s. Undervolting or power limits may improve margin.`,
+    };
+  }
+
+  return {
+    action: "PROFITABLE: MINE",
+    className: "good",
+    reason: `Estimated profit is ${money(result.dailyProfit)} per day and ${money(result.monthlyProfit)} per month. This setup clears your target.`,
+  };
 }
 
 function render() {
-  if (!state.running) return;
+  const config = readConfig();
+  const result = calculate(config);
+  const recommendation = decide(config, result);
 
-  state.tick += 1;
-  const data = telemetry();
-  const margin = estimateProfit(data);
-  const decisions = decide(data, margin);
-
-  elements.price.textContent = `$${data.price.toFixed(3)}`;
-  elements.difficulty.textContent = data.difficulty.toFixed(2);
-  elements.hashrate.textContent = `${data.hashrate.toFixed(1)} TH/s`;
-  elements.gpuTemp.textContent = `${data.gpuTemp.toFixed(1)}C`;
-  elements.wattage.textContent = `${data.wattage.toFixed(0)}W`;
-  elements.margin.textContent = `$${margin.toFixed(2)}/hr`;
-  elements.action.textContent = decisions.finalDecision.action;
-  elements.action.className = decisions.finalDecision.className;
-  elements.reason.textContent = decisions.finalDecision.reason;
-  elements.financialAgent.textContent = decisions.financial.reason;
-  elements.operationsAgent.textContent = decisions.operations.reason;
-
-  addLog(decisions.finalDecision, data, margin);
+  output.totalHashrate.textContent = `${number(result.totalHashrate, 1)} TH/s`;
+  output.totalWatts.textContent = `${number(result.totalWatts, 0)} W`;
+  output.dailyRevenue.textContent = money(result.dailyRevenue);
+  output.dailyEnergy.textContent = money(result.dailyEnergy);
+  output.dailyProfit.textContent = money(result.dailyProfit);
+  output.monthlyProfit.textContent = money(result.monthlyProfit);
+  output.tokensPerDay.textContent = `${number(result.tokensPerDay, 4)} tokens/day`;
+  output.revenueAfterFee.textContent = `${money(result.dailyRevenue)}/day`;
+  output.breakEvenPower.textContent = `${money(result.breakEvenPower)}/kWh`;
+  output.efficiency.textContent = `${number(result.efficiency, 2)} W per TH/s`;
+  output.agentAction.textContent = recommendation.action;
+  output.agentAction.className = recommendation.className;
+  output.agentReason.textContent = recommendation.reason;
 }
 
-elements.toggleButton.addEventListener("click", () => {
-  state.running = !state.running;
-  elements.toggleButton.textContent = state.running ? "Pause" : "Resume";
-  elements.status.textContent = state.running ? "LIVE" : "PAUSED";
+function reset() {
+  ids.forEach((id) => {
+    inputs[id].value = defaults[id];
+  });
+  render();
+}
+
+ids.forEach((id) => {
+  inputs[id].addEventListener("input", render);
 });
 
-elements.clearButton.addEventListener("click", () => {
-  elements.log.innerHTML = "";
-});
+output.resetButton.addEventListener("click", reset);
 
 render();
-setInterval(render, 1200);
-

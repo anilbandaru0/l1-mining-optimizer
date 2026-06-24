@@ -3,76 +3,184 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>L1 Mining Optimizer</title>
+    <title>L1 Mining Rig Profit Calculator</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="shell">
-      <section class="topbar">
+      <header class="topbar">
         <div>
-          <p class="eyebrow">Agent-driven mining telemetry</p>
-          <h1>Layer-1 Mining Optimizer</h1>
+          <p class="eyebrow">Layer-1 Mining Optimizer</p>
+          <h1>Rig Profit Calculator</h1>
+          <p class="intro">Enter your GPU setup, electricity price, and chain assumptions to estimate hourly, daily, and monthly mining profit.</p>
         </div>
-        <button id="toggleButton" type="button">Pause</button>
-      </section>
+        <button id="resetButton" type="button">Reset</button>
+      </header>
 
-      <section class="metrics" aria-label="Live mining metrics">
-        <article>
-          <span>Token Price</span>
-          <strong id="price">$0.000</strong>
-        </article>
-        <article>
-          <span>Difficulty</span>
-          <strong id="difficulty">0.00</strong>
-        </article>
-        <article>
-          <span>Hashrate</span>
-          <strong id="hashrate">0 TH/s</strong>
-        </article>
-        <article>
-          <span>GPU Temp</span>
-          <strong id="gpuTemp">0C</strong>
-        </article>
-        <article>
-          <span>Wattage</span>
-          <strong id="wattage">0W</strong>
-        </article>
-        <article>
-          <span>Margin</span>
-          <strong id="margin">$0/hr</strong>
-        </article>
-      </section>
+      <section class="workspace">
+        <form class="panel form-panel" id="rigForm">
+          <div class="section-title">
+            <h2>Rig Setup</h2>
+            <p>Your hardware configuration</p>
+          </div>
 
-      <section class="decision-panel">
-        <div>
-          <p class="label">Final Agent Action</p>
-          <h2 id="action">Starting...</h2>
-          <p id="reason">Waiting for telemetry.</p>
-        </div>
-        <div class="status" id="status">LIVE</div>
-      </section>
+          <div class="grid two">
+            <label>
+              Number of GPUs
+              <input id="gpuCount" type="number" min="1" step="1" value="6" />
+            </label>
+            <label>
+              Hashrate per GPU
+              <div class="input-row">
+                <input id="hashratePerGpu" type="number" min="0" step="0.1" value="22" />
+                <span>TH/s</span>
+              </div>
+            </label>
+            <label>
+              Wattage per GPU
+              <div class="input-row">
+                <input id="wattsPerGpu" type="number" min="0" step="1" value="135" />
+                <span>W</span>
+              </div>
+            </label>
+            <label>
+              Other rig power
+              <div class="input-row">
+                <input id="baseWatts" type="number" min="0" step="1" value="120" />
+                <span>W</span>
+              </div>
+            </label>
+          </div>
 
-      <section class="agents">
-        <article>
-          <h3>Financial Agent</h3>
-          <p id="financialAgent">Calculating profitability...</p>
-        </article>
-        <article>
-          <h3>Operations Agent</h3>
-          <p id="operationsAgent">Checking hardware health...</p>
-        </article>
-      </section>
+          <div class="section-title">
+            <h2>Costs</h2>
+            <p>Your electricity and pool costs</p>
+          </div>
 
-      <section>
-        <div class="section-head">
-          <h2>Action Log</h2>
-          <button id="clearButton" type="button">Clear</button>
-        </div>
-        <ol id="log" class="log"></ol>
+          <div class="grid two">
+            <label>
+              Electricity price
+              <div class="input-row">
+                <input id="electricityCost" type="number" min="0" step="0.001" value="0.14" />
+                <span>$/kWh</span>
+              </div>
+            </label>
+            <label>
+              Pool fee
+              <div class="input-row">
+                <input id="poolFee" type="number" min="0" max="100" step="0.1" value="1.0" />
+                <span>%</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="section-title">
+            <h2>Chain Assumptions</h2>
+            <p>Use real values later, or keep these demo defaults</p>
+          </div>
+
+          <div class="grid two">
+            <label>
+              Token price
+              <div class="input-row">
+                <input id="tokenPrice" type="number" min="0" step="0.001" value="0.72" />
+                <span>$</span>
+              </div>
+            </label>
+            <label>
+              Block reward
+              <div class="input-row">
+                <input id="blockReward" type="number" min="0" step="0.01" value="4" />
+                <span>tokens</span>
+              </div>
+            </label>
+            <label>
+              Block time
+              <div class="input-row">
+                <input id="blockTime" type="number" min="1" step="1" value="12" />
+                <span>sec</span>
+              </div>
+            </label>
+            <label>
+              Network hashrate
+              <div class="input-row">
+                <input id="networkHashrate" type="number" min="1" step="1" value="9000" />
+                <span>TH/s</span>
+              </div>
+            </label>
+            <label>
+              Difficulty factor
+              <input id="difficulty" type="number" min="0.1" step="0.01" value="1.15" />
+            </label>
+            <label>
+              Minimum profit target
+              <div class="input-row">
+                <input id="minProfit" type="number" step="0.01" value="5" />
+                <span>$/day</span>
+              </div>
+            </label>
+          </div>
+        </form>
+
+        <section class="results">
+          <div class="panel decision">
+            <p class="label">Autonomous Agent Recommendation</p>
+            <h2 id="agentAction">Calculating...</h2>
+            <p id="agentReason">Waiting for your rig values.</p>
+          </div>
+
+          <div class="cards">
+            <article>
+              <span>Total Hashrate</span>
+              <strong id="totalHashrate">0 TH/s</strong>
+            </article>
+            <article>
+              <span>Total Power</span>
+              <strong id="totalWatts">0 W</strong>
+            </article>
+            <article>
+              <span>Daily Revenue</span>
+              <strong id="dailyRevenue">$0.00</strong>
+            </article>
+            <article>
+              <span>Daily Energy Cost</span>
+              <strong id="dailyEnergy">$0.00</strong>
+            </article>
+            <article>
+              <span>Daily Profit</span>
+              <strong id="dailyProfit">$0.00</strong>
+            </article>
+            <article>
+              <span>Monthly Profit</span>
+              <strong id="monthlyProfit">$0.00</strong>
+            </article>
+          </div>
+
+          <div class="panel breakdown">
+            <h2>Calculation Breakdown</h2>
+            <dl>
+              <div>
+                <dt>Expected tokens per day</dt>
+                <dd id="tokensPerDay">0</dd>
+              </div>
+              <div>
+                <dt>Revenue after pool fee</dt>
+                <dd id="revenueAfterFee">$0.00/day</dd>
+              </div>
+              <div>
+                <dt>Break-even electricity price</dt>
+                <dd id="breakEvenPower">$0.00/kWh</dd>
+              </div>
+              <div>
+                <dt>Power efficiency</dt>
+                <dd id="efficiency">0 W per TH/s</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
       </section>
     </main>
 
     <script src="app.js"></script>
   </body>
 </html>
-
