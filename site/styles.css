@@ -293,9 +293,82 @@ dd {
 
 .story,
 .gpu-table-panel,
-.target-table-panel {
+.target-table-panel,
+.agent-console-panel {
   margin-top: 16px;
   padding: 20px;
+}
+
+.console-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.console-header h2 {
+  margin-bottom: 0;
+}
+
+.console-status {
+  border: 1px solid rgba(103, 239, 163, 0.32);
+  border-radius: 999px;
+  color: #67efa3;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+}
+
+.agent-console {
+  background: #02070a;
+  border: 1px solid rgba(136, 216, 204, 0.24);
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  color: #d8f8ef;
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+  height: 280px;
+  line-height: 1.55;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.console-line {
+  margin: 0 0 7px;
+  white-space: normal;
+}
+
+.console-line.muted {
+  color: #78909c;
+}
+
+.console-time {
+  color: #78909c;
+}
+
+.agent-tag {
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: 900;
+  margin: 0 6px;
+  padding: 1px 7px;
+}
+
+.agent-financial {
+  background: rgba(255, 209, 115, 0.14);
+  color: #ffd173;
+}
+
+.agent-operations {
+  background: rgba(136, 216, 204, 0.14);
+  color: #88d8cc;
+}
+
+.severity-critical {
+  color: #ff8d8d;
+  font-weight: 900;
+  text-shadow: 0 0 14px rgba(255, 141, 141, 0.25);
 }
 
 .story-grid {

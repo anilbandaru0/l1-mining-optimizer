@@ -47,6 +47,30 @@ That launcher runs a working end-to-end demo with mock hardware scripts. It writ
 
 The mock scripts do not touch real hardware. They only append to log files.
 
+## Run the FastAPI Backend
+
+```powershell
+cd work
+pip install -e .
+uvicorn mining_orchestrator.api:app --host 0.0.0.0 --port 8000
+```
+
+Example telemetry request:
+
+```powershell
+Invoke-RestMethod -Method Post http://localhost:8000/telemetry -ContentType "application/json" -Body '{"current_hashrate":132,"gpu_temp":84,"token_price":0.72,"network_difficulty":1.15}'
+```
+
+The backend uses a LangGraph workflow. Operations Agent runs first. If `gpu_temp > 80C`, it immediately routes to a power-limit execution node. Otherwise it routes to the Financial Agent for profitability evaluation.
+
+Docker deployment:
+
+```powershell
+cd work
+docker build -t l1-mining-orchestrator .
+docker run -p 8000:8000 l1-mining-orchestrator
+```
+
 ## Website Demo
 
 The `docs/` folder contains the GitHub Pages website. GitHub Pages offers `/root` and `/docs`, so choose `/docs` when deploying.

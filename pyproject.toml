@@ -3,10 +3,14 @@ name = "l1-mining-orchestrator"
 version = "0.1.0"
 description = "Autonomous Layer-1 mining profitability and telemetry optimizer."
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+  "fastapi>=0.115.0",
+  "langgraph>=0.2.0",
+  "uvicorn[standard]>=0.30.0"
+]
 
 [project.optional-dependencies]
-langgraph = ["langgraph>=0.2.0"]
+dev = []
 
 [project.scripts]
 mining-orchestrator = "mining_orchestrator.cli:main"
@@ -14,4 +18,3 @@ mining-orchestrator = "mining_orchestrator.cli:main"
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-

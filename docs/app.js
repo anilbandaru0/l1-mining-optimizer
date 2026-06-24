@@ -297,6 +297,11 @@ const miningTargets = {
 };
 
 const livePrices = {};
+const PRICE_REFRESH_MS = 60000;
+const PLACEHOLDER_TOKEN = {
+  id: "ethereum-classic",
+  symbol: "PLACEHOLDER",
+};
 const tickerCoins = [
   ["bitcoin", "BTC"],
   ["ethereum-classic", "ETC"],
@@ -350,6 +355,7 @@ const output = {
   refreshPricesButton: document.querySelector("#refreshPricesButton"),
   resetButton: document.querySelector("#resetButton"),
   tickerBar: document.querySelector("#tickerBar"),
+  agentConsole: document.querySelector("#agentConsole"),
 };
 
 function money(value) {
@@ -646,6 +652,37 @@ async function refreshPrices() {
   }
 }
 
+async function fetchLiveCryptoPrices() {
+  const ids = ["bitcoin", PLACEHOLDER_TOKEN.id].join(",");
+  try {
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+    const response = await fetch(url, { cache: "no-store" });
+    if (response.status === 429) {
+      throw new Error("CoinGecko rate limit reached. Please wait and refresh again.");
+    }
+    if (!response.ok) {
+      throw new Error(`CoinGecko request failed with HTTP ${response.status}.`);
+    }
+
+    const data = await response.json();
+    livePrices.bitcoin = data.bitcoin || livePrices.bitcoin;
+    livePrices[PLACEHOLDER_TOKEN.id] = data[PLACEHOLDER_TOKEN.id] || livePrices[PLACEHOLDER_TOKEN.id];
+
+    const bitcoinPrice = compactMoney(data.bitcoin?.usd);
+    const placeholderPrice = compactMoney(data[PLACEHOLDER_TOKEN.id]?.usd);
+    output.tickerBar.innerHTML = `
+      <span><strong>BTC</strong>${bitcoinPrice}</span>
+      <span><strong>${PLACEHOLDER_TOKEN.symbol}</strong>${placeholderPrice}</span>
+    `;
+    return data;
+  } catch (error) {
+    output.tickerBar.innerHTML = `
+      <span><strong>Live prices unavailable</strong>${error.message || "Using cached/manual values."}</span>
+    `;
+    return null;
+  }
+}
+
 function renderTicker() {
   output.tickerBar.innerHTML = "";
   tickerCoins.forEach(([id, symbol]) => {
@@ -656,6 +693,48 @@ function renderTicker() {
     item.innerHTML = `<strong>${symbol}</strong>${compactMoney(price)} <em class="${direction}">${Number.isFinite(change) ? `${change.toFixed(1)}%` : ""}</em>`;
     output.tickerBar.append(item);
   });
+}
+
+function logAgentAction(agentName, actionText, severity = "info") {
+  const firstLine = output.agentConsole.querySelector(".muted");
+  if (firstLine) firstLine.remove();
+
+  const line = document.createElement("p");
+  line.className = "console-line";
+
+  const agentClass = agentName === "Financial Agent" ? "agent-financial" : "agent-operations";
+  const severityClass = severity === "critical" ? "severity-critical" : "";
+  const timestamp = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  line.innerHTML = `
+    <span class="console-time">[${timestamp}]</span>
+    <span class="agent-tag ${agentClass}">${agentName}</span>
+    <span class="${severityClass}">${actionText}</span>
+  `;
+
+  output.agentConsole.append(line);
+  output.agentConsole.scrollTop = output.agentConsole.scrollHeight;
+}
+
+function startMockAgentDecisionLoop() {
+  const decisions = [
+    ["Financial Agent", "Calculated margin from live token price and network difficulty.", "info"],
+    ["Operations Agent", "GPU telemetry normal. Holding current power limit.", "info"],
+    ["Financial Agent", "Pearl dropped below profit target. Evaluating target switch.", "warning"],
+    ["Operations Agent", "GPU temperature crossed 80C. THROTTLING POWER LIMIT.", "critical"],
+    ["Financial Agent", "Auto-selected highest estimated profit target from ranking table.", "info"],
+  ];
+
+  let index = 0;
+  window.setInterval(() => {
+    const [agentName, actionText, severity] = decisions[index % decisions.length];
+    logAgentAction(agentName, actionText, severity);
+    index += 1;
+  }, 2200);
 }
 
 function reset() {
@@ -676,5 +755,15 @@ output.resetButton.addEventListener("click", reset);
 
 renderGpuTable();
 render();
-renderTicker();
+fetchLiveCryptoPrices().then(() => {
+  renderTicker();
+  render();
+});
+window.setInterval(() => {
+  fetchLiveCryptoPrices().then(() => {
+    renderTicker();
+    render();
+  });
+}, PRICE_REFRESH_MS);
+startMockAgentDecisionLoop();
 refreshPrices();
