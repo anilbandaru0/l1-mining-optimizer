@@ -19,10 +19,32 @@
           <p class="intro">Pick a GPU model, enter your rig size and electricity cost, then estimate profit and see what the autonomous agents would do.</p>
         </div>
         <div class="header-actions">
+          <span class="backend-badge">Orchestrator Backend: Simulated Demo Mode</span>
           <button id="refreshPricesButton" type="button">Refresh Prices</button>
           <button id="resetButton" type="button">Reset</button>
         </div>
       </header>
+
+      <section class="agent-top-grid">
+        <div class="panel decision">
+          <p class="label">Autonomous Agent Recommendation</p>
+          <h2 id="agentAction">Calculating...</h2>
+          <p id="agentReason">Waiting for your rig values.</p>
+        </div>
+
+        <section class="panel agent-console-panel top-console">
+          <div class="console-header">
+            <div>
+              <p class="label">Live Agent Action Log</p>
+              <h2>LangGraph Decision Stream</h2>
+            </div>
+            <span class="console-status"><span class="live-cursor"></span>SIMULATED</span>
+          </div>
+          <div class="agent-console" id="agentConsole" role="log" aria-live="polite">
+            <p class="console-line muted">Waiting for LangGraph agent events...</p>
+          </div>
+        </section>
+      </section>
 
       <section class="workspace">
         <form class="panel form-panel" id="rigForm">
@@ -168,11 +190,6 @@
         </form>
 
         <section class="results">
-          <div class="panel decision">
-            <p class="label">Autonomous Agent Recommendation</p>
-            <h2 id="agentAction">Calculating...</h2>
-            <p id="agentReason">Waiting for your rig values.</p>
-          </div>
           <div class="panel decision target-panel">
             <p class="label">Selected Mining Target</p>
             <h2 id="selectedTarget">Auto</h2>
@@ -230,39 +247,6 @@
         </section>
       </section>
 
-      <section class="panel story">
-        <div class="section-title">
-          <h2>Project Blueprint</h2>
-          <p>The Layer-1 Mining Profitability & Telemetry Orchestrator combines a GPU rig calculator, live telemetry concept, and autonomous agent actions.</p>
-        </div>
-        <div class="story-grid">
-          <article>
-            <h3>The Problem</h3>
-            <p>The profitability of mining dynamic Layer-1 blockchains like Pearl fluctuates wildly based on tokenomics, network difficulty, and real-time hardware energy costs. Miners usually have to stare at dashboards to make manual adjustments.</p>
-          </article>
-          <article>
-            <h3>The Unique Twist</h3>
-            <p>Build an autonomous, agent-driven mining optimizer that controls hardware based on live data streams instead of only showing a static dashboard.</p>
-          </article>
-          <article>
-            <h3>The Architecture</h3>
-            <p>A Python backend ingests two heavy data streams: live L1 blockchain metrics like block rewards and difficulty, plus local hardware telemetry like hashrate, GPU thermals, and wattage.</p>
-          </article>
-          <article>
-            <h3>The AI Engine</h3>
-            <p>A multi-agent LangGraph setup powers the decisions. The Financial Agent calculates real-time profit margins. The Operations Agent monitors hardware health.</p>
-          </article>
-          <article>
-            <h3>The Action</h3>
-            <p>Instead of just showing a dashboard, the system autonomously executes scripts to throttle hardware power limits or switch mining targets the second an L1 stops being profitable.</p>
-          </article>
-          <article>
-            <h3>Why It Wins</h3>
-            <p>It merges high-throughput data engineering with financial optimization and shows agents interacting directly with physical hardware and financial data streams.</p>
-          </article>
-        </div>
-      </section>
-
       <section class="panel gpu-table-panel">
         <div class="section-title">
           <h2>GPU Presets</h2>
@@ -310,16 +294,36 @@
         </div>
       </section>
 
-      <section class="panel agent-console-panel">
-        <div class="console-header">
-          <div>
-            <p class="label">Live Agent Action Log</p>
-            <h2>LangGraph Decision Stream</h2>
-          </div>
-          <span class="console-status">SIMULATED</span>
+      <section class="panel story">
+        <div class="section-title">
+          <h2>Project Blueprint</h2>
+          <p>The Layer-1 Mining Profitability & Telemetry Orchestrator combines a GPU rig calculator, live telemetry concept, and autonomous agent actions.</p>
         </div>
-        <div class="agent-console" id="agentConsole" role="log" aria-live="polite">
-          <p class="console-line muted">Waiting for LangGraph agent events...</p>
+        <div class="story-grid">
+          <article>
+            <h3>The Problem</h3>
+            <p>The profitability of mining dynamic Layer-1 blockchains like Pearl fluctuates wildly based on tokenomics, network difficulty, and real-time hardware energy costs. Miners usually have to stare at dashboards to make manual adjustments.</p>
+          </article>
+          <article>
+            <h3>The Unique Twist</h3>
+            <p>Build an autonomous, agent-driven mining optimizer that controls hardware based on live data streams instead of only showing a static dashboard.</p>
+          </article>
+          <article>
+            <h3>The Architecture</h3>
+            <p>A Python backend ingests two heavy data streams: live L1 blockchain metrics like block rewards and difficulty, plus local hardware telemetry like hashrate, GPU thermals, and wattage.</p>
+          </article>
+          <article>
+            <h3>The AI Engine</h3>
+            <p>A multi-agent LangGraph setup powers the decisions. The Financial Agent calculates real-time profit margins. The Operations Agent monitors hardware health.</p>
+          </article>
+          <article>
+            <h3>The Action</h3>
+            <p>Instead of just showing a dashboard, the system autonomously executes scripts to throttle hardware power limits or switch mining targets the second an L1 stops being profitable.</p>
+          </article>
+          <article>
+            <h3>Why It Wins</h3>
+            <p>It merges high-throughput data engineering with financial optimization and shows agents interacting directly with physical hardware and financial data streams.</p>
+          </article>
         </div>
       </section>
     </main>

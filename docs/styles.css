@@ -75,10 +75,27 @@ button {
 }
 
 .header-actions {
+  align-items: flex-end;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.backend-badge {
+  border: 1px solid rgba(255, 209, 115, 0.34);
+  border-radius: 999px;
+  color: #ffd173;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 9px 12px;
+}
+
+.agent-top-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .eyebrow,
@@ -299,6 +316,10 @@ dd {
   padding: 20px;
 }
 
+.top-console {
+  margin-top: 0;
+}
+
 .console-header {
   align-items: center;
   display: flex;
@@ -312,12 +333,25 @@ dd {
 }
 
 .console-status {
+  align-items: center;
   border: 1px solid rgba(103, 239, 163, 0.32);
   border-radius: 999px;
   color: #67efa3;
+  display: inline-flex;
+  gap: 7px;
   font-size: 12px;
   font-weight: 900;
   padding: 6px 10px;
+}
+
+.live-cursor {
+  animation: pulseCursor 1.15s ease-in-out infinite;
+  background: #67efa3;
+  border-radius: 999px;
+  box-shadow: 0 0 14px rgba(103, 239, 163, 0.7);
+  display: inline-block;
+  height: 8px;
+  width: 8px;
 }
 
 .agent-console {
@@ -428,8 +462,21 @@ tbody tr:hover {
   background: rgba(103, 239, 163, 0.08);
 }
 
+@keyframes pulseCursor {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+}
+
 @media (max-width: 940px) {
   .workspace,
+  .agent-top-grid,
   .cards,
   .two,
   .story-grid {

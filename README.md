@@ -26,6 +26,8 @@ The site can fetch live USD token prices from CoinGecko and compare mining targe
 
 WhatToMine's documented API requires an API token for calculation endpoints, so the public GitHub Pages version does not depend on private API credentials. It uses live CoinGecko prices plus editable/reference mining assumptions. Network hashrate, rewards, difficulty, and GPU algorithm performance remain editable because exact mining profitability requires chain-specific telemetry and miner-specific benchmark data.
 
+The frontend now uses algorithm-specific GPU profiles instead of one flat hashrate. For example, the same RTX 4090 has different demo metrics for KawPow, kHeavyHash, FishHash, Etchash, Pearl, and RandomX. RandomX is treated as CPU-focused, so GPU hashrate is set to zero unless the user chooses custom metrics.
+
 ## Run the Demo
 
 ```powershell
