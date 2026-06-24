@@ -8,6 +8,10 @@
   </head>
   <body>
     <main class="shell">
+      <section class="ticker" id="tickerBar" aria-label="Live crypto prices">
+        <span>Loading live prices...</span>
+      </section>
+
       <header class="topbar">
         <div>
           <p class="eyebrow">Layer-1 Mining Profitability & Telemetry Orchestrator</p>
@@ -102,12 +106,21 @@
               Mining target
               <select id="miningTarget">
                 <option value="auto">Auto select best target</option>
+                <option value="keryx">Keryx</option>
+                <option value="pearl">Pearl</option>
+                <option value="qubitcoin">Qubitcoin</option>
+                <option value="zano">Zano</option>
+                <option value="tariCuckaroo">Tari-Cuckaroo29</option>
+                <option value="epicProgpow">EPIC-ProgPow</option>
+                <option value="mewc">MEWC-MeowPow</option>
+                <option value="karlsen">Karlsen</option>
                 <option value="kaspa">Kaspa</option>
                 <option value="ravencoin">Ravencoin</option>
                 <option value="ergo">Ergo</option>
+                <option value="conflux">Conflux</option>
+                <option value="ironfish">IronFish</option>
                 <option value="monero">Monero</option>
                 <option value="ethereumClassic">Ethereum Classic</option>
-                <option value="pearl">Pearl demo target</option>
                 <option value="custom">Custom target</option>
               </select>
             </label>
@@ -272,17 +285,24 @@
 
       <section class="panel target-table-panel">
         <div class="section-title">
-          <h2>Live Target Comparison</h2>
-          <p>Live USD prices come from CoinGecko. Rewards, difficulty, and network hashrate are demo assumptions for comparing targets.</p>
+          <h2>WhatToMine-Style Live Target Comparison</h2>
+          <p>Live USD prices come from CoinGecko where available. BTC exchange-rate rows convert through live BTC price. Rewards, difficulty, and net hash are editable/reference assumptions inspired by mining profitability tables.</p>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Target</th>
-                <th>Live Price</th>
-                <th>Est. Daily Profit</th>
-                <th>Action</th>
+                <th>Name(Tag)</th>
+                <th>Algorithm</th>
+                <th>BT / BR</th>
+                <th>Difficulty</th>
+                <th>NetHash</th>
+                <th>Est. Rewards 24h</th>
+                <th>Exchange Rate</th>
+                <th>Rev. $</th>
+                <th>Profit</th>
+                <th>Profitability</th>
+                <th>Agent</th>
               </tr>
             </thead>
             <tbody id="targetTable"></tbody>

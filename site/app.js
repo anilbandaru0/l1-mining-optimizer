@@ -56,63 +56,238 @@ const gpuProfiles = {
 };
 
 const miningTargets = {
+  keryx: {
+    name: "Keryx",
+    tag: "KRX",
+    algorithm: "KeryxHash",
+    coingeckoId: null,
+    exchange: "Nonkyc",
+    exchangeRateBtc: 0.00000001,
+    blockReward: 4.76,
+    blockTime: 0.1,
+    networkHashrate: 931.97,
+    networkHashrateLabel: "931.97 Gh/s",
+    difficulty: 46645,
+    difficultyLabel: "46,645M",
+    gpuMultiplier: 18.4,
+  },
+  pearl: {
+    name: "Pearl",
+    tag: "PRL",
+    algorithm: "Pearl",
+    coingeckoId: null,
+    exchange: "SafeTrade",
+    exchangeRateBtc: 0.00001119,
+    blockReward: 2576.85,
+    blockTime: 193,
+    networkHashrate: 29629060,
+    networkHashrateLabel: "29,629.06 Ph/s",
+    difficulty: 20315869.375,
+    difficultyLabel: "20,315,869.375",
+    gpuMultiplier: 1.0,
+  },
+  qubitcoin: {
+    name: "Qubitcoin",
+    tag: "QTC",
+    algorithm: "Qhash",
+    coingeckoId: null,
+    exchange: "SafeTrade",
+    exchangeRateBtc: 0.00001023,
+    blockReward: 50,
+    blockTime: 633,
+    networkHashrate: 11610,
+    networkHashrateLabel: "11.61 Th/s",
+    difficulty: 7346558.635,
+    difficultyLabel: "7,346,558,635M",
+    gpuMultiplier: 8.5,
+  },
+  zano: {
+    name: "Zano",
+    tag: "ZANO",
+    algorithm: "ProgPowZ",
+    coingeckoId: "zano",
+    exchange: "MEXC",
+    exchangeRateBtc: 0.00017052,
+    blockReward: 1,
+    blockTime: 120,
+    networkHashrate: 441.06,
+    networkHashrateLabel: "441.06 Gh/s",
+    difficulty: 52926.837,
+    difficultyLabel: "52,926,837M",
+    gpuMultiplier: 1.35,
+  },
+  tariCuckaroo: {
+    name: "Tari-Cuckaroo29",
+    tag: "XTM",
+    algorithm: "Cuckaroo29",
+    coingeckoId: null,
+    exchange: "Nonkyc",
+    exchangeRateBtc: 0.00000001,
+    blockReward: 10802.94,
+    blockTime: 469,
+    networkHashrate: 20.07,
+    networkHashrateLabel: "20.07 kh/s",
+    difficulty: 9425922,
+    difficultyLabel: "9,425,922",
+    gpuMultiplier: 0.05,
+  },
+  epicProgpow: {
+    name: "EPIC-ProgPow",
+    tag: "EPIC",
+    algorithm: "ProgPow",
+    coingeckoId: null,
+    exchange: "Nonkyc",
+    exchangeRateBtc: 0.0000028,
+    blockReward: 0.99,
+    blockTime: 120,
+    networkHashrate: 9.98,
+    networkHashrateLabel: "9.98 Gh/s",
+    difficulty: 598695,
+    difficultyLabel: "598,695M",
+    gpuMultiplier: 1.18,
+  },
+  mewc: {
+    name: "MEWC-MeowPow",
+    tag: "MEWC",
+    algorithm: "MeowPow",
+    coingeckoId: null,
+    exchange: "Nonkyc",
+    exchangeRateBtc: 0.000000004,
+    blockReward: 3000,
+    blockTime: 120,
+    networkHashrate: 4.41,
+    networkHashrateLabel: "4.41 Gh/s",
+    difficulty: 123.289,
+    difficultyLabel: "123.289",
+    gpuMultiplier: 0.9,
+  },
+  karlsen: {
+    name: "Karlsen",
+    tag: "KLS",
+    algorithm: "Karlsenhashv2",
+    coingeckoId: null,
+    exchange: "Nonkyc",
+    exchangeRateBtc: 0.000000004,
+    blockReward: 21.83,
+    blockTime: 1,
+    networkHashrate: 19.97,
+    networkHashrateLabel: "19.97 Gh/s",
+    difficulty: 19984,
+    difficultyLabel: "19,984M",
+    gpuMultiplier: 1.12,
+  },
   kaspa: {
     name: "Kaspa",
+    tag: "KAS",
+    algorithm: "kHeavyHash",
     coingeckoId: "kaspa",
+    exchange: "MEXC",
+    exchangeRateBtc: null,
     blockReward: 103.83,
     blockTime: 1,
     networkHashrate: 950000,
+    networkHashrateLabel: "950 Th/s",
     difficulty: 1.2,
+    difficultyLabel: "1.2",
     gpuMultiplier: 1.12,
   },
   ravencoin: {
     name: "Ravencoin",
+    tag: "RVN",
+    algorithm: "KawPow",
     coingeckoId: "ravencoin",
-    blockReward: 2500,
+    exchange: "Binance",
+    exchangeRateBtc: null,
+    blockReward: 1250,
     blockTime: 60,
-    networkHashrate: 180000,
-    difficulty: 1.35,
+    networkHashrate: 1580,
+    networkHashrateLabel: "1.58 Th/s",
+    difficulty: 22103.804,
+    difficultyLabel: "22,103.804",
     gpuMultiplier: 0.88,
   },
   ergo: {
     name: "Ergo",
+    tag: "ERG",
+    algorithm: "Autolykos",
     coingeckoId: "ergo",
+    exchange: "MEXC",
+    exchangeRateBtc: null,
     blockReward: 3,
-    blockTime: 120,
-    networkHashrate: 24000,
-    difficulty: 1.1,
+    blockTime: 122,
+    networkHashrate: 686.92,
+    networkHashrateLabel: "686.92 Gh/s",
+    difficulty: 83804,
+    difficultyLabel: "83,804G",
     gpuMultiplier: 0.92,
+  },
+  conflux: {
+    name: "Conflux",
+    tag: "CFX",
+    algorithm: "Octopus",
+    coingeckoId: "conflux-token",
+    exchange: "Binance",
+    exchangeRateBtc: null,
+    blockReward: 0.4,
+    blockTime: 0.5,
+    networkHashrate: 718.72,
+    networkHashrateLabel: "718.72 Gh/s",
+    difficulty: 361443,
+    difficultyLabel: "361,443M",
+    gpuMultiplier: 1.05,
+  },
+  ironfish: {
+    name: "IronFish",
+    tag: "IRON",
+    algorithm: "FishHash",
+    coingeckoId: "iron-fish",
+    exchange: "MEXC",
+    exchangeRateBtc: 0.00000132,
+    blockReward: 17.25,
+    blockTime: 60,
+    networkHashrate: 359.5,
+    networkHashrateLabel: "359.50 Gh/s",
+    difficulty: 21570,
+    difficultyLabel: "21,570G",
+    gpuMultiplier: 1.22,
   },
   monero: {
     name: "Monero",
+    tag: "XMR",
+    algorithm: "RandomX",
     coingeckoId: "monero",
+    exchange: "Kraken",
+    exchangeRateBtc: null,
     blockReward: 0.6,
     blockTime: 120,
     networkHashrate: 4200,
+    networkHashrateLabel: "4.20 Gh/s",
     difficulty: 1.0,
+    difficultyLabel: "1.0",
     gpuMultiplier: 0.18,
   },
   ethereumClassic: {
     name: "Ethereum Classic",
+    tag: "ETC",
+    algorithm: "Etchash",
     coingeckoId: "ethereum-classic",
-    blockReward: 2.56,
-    blockTime: 13,
-    networkHashrate: 180000,
-    difficulty: 1.25,
-    gpuMultiplier: 1.0,
-  },
-  pearl: {
-    name: "Pearl demo target",
-    coingeckoId: null,
-    blockReward: 4,
-    blockTime: 12,
-    networkHashrate: 9000,
-    difficulty: 1.15,
+    exchange: "WhiteBIT",
+    exchangeRateBtc: null,
+    blockReward: 1.99,
+    blockTime: 13.36,
+    networkHashrate: 191750,
+    networkHashrateLabel: "191.75 Th/s",
+    difficulty: 2561039,
+    difficultyLabel: "2,561,039G",
     gpuMultiplier: 1.0,
   },
   custom: {
     name: "Custom target",
+    tag: "CUSTOM",
+    algorithm: "Manual",
     coingeckoId: null,
+    exchange: "Manual",
+    exchangeRateBtc: null,
     blockReward: 4,
     blockTime: 12,
     networkHashrate: 9000,
@@ -122,6 +297,15 @@ const miningTargets = {
 };
 
 const livePrices = {};
+const tickerCoins = [
+  ["bitcoin", "BTC"],
+  ["ethereum-classic", "ETC"],
+  ["ethereum", "ETH"],
+  ["zelcash", "FLUX"],
+  ["litecoin", "LTC"],
+  ["ravencoin", "RVN"],
+  ["monero", "XMR"],
+];
 
 const defaults = {
   gpuModel: "rtx5090",
@@ -165,6 +349,7 @@ const output = {
   priceStatus: document.querySelector("#priceStatus"),
   refreshPricesButton: document.querySelector("#refreshPricesButton"),
   resetButton: document.querySelector("#resetButton"),
+  tickerBar: document.querySelector("#tickerBar"),
 };
 
 function money(value) {
@@ -173,6 +358,13 @@ function money(value) {
     currency: "USD",
     maximumFractionDigits: 2,
   });
+}
+
+function compactMoney(value) {
+  if (!Number.isFinite(value)) return "-";
+  if (value < 0.01) return `$${value.toFixed(6)}`;
+  if (value < 1) return `$${value.toFixed(4)}`;
+  return money(value);
 }
 
 function number(value, digits = 2) {
@@ -195,18 +387,27 @@ function readConfig() {
 
 function targetConfig(config, targetId) {
   const target = miningTargets[targetId] || miningTargets.custom;
+  const btcUsd = livePrices.bitcoin?.usd || 0;
   const livePrice = target.coingeckoId ? livePrices[target.coingeckoId]?.usd : null;
+  const btcPrice = target.exchangeRateBtc && btcUsd ? target.exchangeRateBtc * btcUsd : null;
   return {
     ...config,
     targetId,
     targetName: target.name,
-    tokenPrice: livePrice || config.tokenPrice,
+    targetTag: target.tag,
+    algorithm: target.algorithm,
+    exchange: target.exchange,
+    exchangeRateBtc: target.exchangeRateBtc,
+    networkHashrateLabel: target.networkHashrateLabel,
+    difficultyLabel: target.difficultyLabel,
+    tokenPrice: livePrice || btcPrice || config.tokenPrice,
     blockReward: target.blockReward,
     blockTime: target.blockTime,
     networkHashrate: target.networkHashrate,
     difficulty: target.difficulty,
     gpuMultiplier: target.gpuMultiplier,
-    isLivePrice: Boolean(livePrice),
+    isLivePrice: Boolean(livePrice || btcPrice),
+    priceSource: livePrice ? "CoinGecko" : btcPrice ? "BTC exchange rate" : "manual",
   };
 }
 
@@ -365,15 +566,26 @@ function renderGpuTable() {
 
 function renderTargetTable(comparison, activeTargetId) {
   output.targetTable.innerHTML = "";
+  const bestProfit = comparison[0]?.result.dailyProfit || 0;
   comparison.forEach(({ id, config, result }) => {
     const recommendation = decide(config, result);
-    const priceLabel = config.isLivePrice ? money(config.tokenPrice) : `${money(config.tokenPrice)} manual`;
+    const profitability = bestProfit !== 0 ? (result.dailyProfit / bestProfit) * 100 : 0;
+    const exchangeLabel = config.exchangeRateBtc
+      ? `${config.exchangeRateBtc.toFixed(8)} BTC (${config.exchange})`
+      : `${compactMoney(config.tokenPrice)} (${config.exchange || config.priceSource})`;
     const row = document.createElement("tr");
     if (id === activeTargetId) row.classList.add("selected-row");
     row.innerHTML = `
-      <td>${config.targetName}</td>
-      <td>${priceLabel}</td>
+      <td>${config.targetName}(${config.targetTag || ""})</td>
+      <td>${config.algorithm || "-"}</td>
+      <td>BT: ${formatBlockTime(config.blockTime)}<br>BR: ${number(config.blockReward, 4)}</td>
+      <td>${config.difficultyLabel || number(config.difficulty, 2)}</td>
+      <td>${config.networkHashrateLabel || `${number(config.networkHashrate, 2)} TH/s`}</td>
+      <td>${number(result.tokensPerDay, 4)}</td>
+      <td>${exchangeLabel}</td>
+      <td>${money(result.dailyRevenue)}</td>
       <td>${money(result.dailyProfit)}</td>
+      <td>${number(profitability, 0)}%</td>
       <td class="${recommendation.className}">${recommendation.action}</td>
     `;
     row.addEventListener("click", () => {
@@ -382,6 +594,14 @@ function renderTargetTable(comparison, activeTargetId) {
     });
     output.targetTable.append(row);
   });
+}
+
+function formatBlockTime(seconds) {
+  if (seconds < 1) return `${seconds}s`;
+  if (seconds < 60) return `${number(seconds, 2)}s`;
+  const minutes = Math.floor(seconds / 60);
+  const rest = Math.round(seconds % 60);
+  return rest ? `${minutes}m ${rest}s` : `${minutes}m`;
 }
 
 function applyMiningTarget() {
@@ -400,9 +620,13 @@ function applyMiningTarget() {
 }
 
 async function refreshPrices() {
-  const idsToFetch = Object.values(miningTargets)
+  const idsToFetch = [
+    ...Object.values(miningTargets)
     .map((target) => target.coingeckoId)
-    .filter(Boolean)
+    .filter(Boolean),
+    ...tickerCoins.map(([id]) => id),
+  ]
+    .filter((id, index, values) => values.indexOf(id) === index)
     .join(",");
 
   output.priceStatus.textContent = "Loading live prices from CoinGecko...";
@@ -414,11 +638,24 @@ async function refreshPrices() {
     Object.assign(livePrices, data);
     const updatedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     output.priceStatus.textContent = `Live prices updated from CoinGecko at ${updatedAt}. Network rewards and difficulty remain editable demo assumptions.`;
+    renderTicker();
     applyMiningTarget();
   } catch (error) {
     output.priceStatus.textContent = "Could not load live prices. The calculator is using manual/demo prices.";
     render();
   }
+}
+
+function renderTicker() {
+  output.tickerBar.innerHTML = "";
+  tickerCoins.forEach(([id, symbol]) => {
+    const price = livePrices[id]?.usd;
+    const change = livePrices[id]?.usd_24h_change;
+    const item = document.createElement("span");
+    const direction = change >= 0 ? "good" : "danger";
+    item.innerHTML = `<strong>${symbol}</strong>${compactMoney(price)} <em class="${direction}">${Number.isFinite(change) ? `${change.toFixed(1)}%` : ""}</em>`;
+    output.tickerBar.append(item);
+  });
 }
 
 function reset() {
@@ -439,4 +676,5 @@ output.resetButton.addEventListener("click", reset);
 
 renderGpuTable();
 render();
+renderTicker();
 refreshPrices();

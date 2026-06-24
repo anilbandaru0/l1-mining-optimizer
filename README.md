@@ -22,7 +22,9 @@ The prototype runs without external services by using deterministic simulated st
 
 The GitHub Pages site includes a GPU-based mining calculator. Users can select GPU profiles such as RTX 5090, RTX 4090, RTX 3090, RX 7900 XTX, or Custom GPU, then enter rig size, electricity cost, chain assumptions, and profit targets.
 
-The site can fetch live USD token prices from CoinGecko and compare demo mining targets such as Kaspa, Ravencoin, Ergo, Monero, Ethereum Classic, and Pearl. Network hashrate, rewards, difficulty, and GPU algorithm performance remain editable assumptions because exact mining profitability requires chain-specific telemetry and miner-specific benchmark data.
+The site can fetch live USD token prices from CoinGecko and compare mining targets in a WhatToMine-style table with algorithm, block time, block reward, difficulty, net hash, estimated rewards, exchange rate, revenue, profit, and profitability ranking.
+
+WhatToMine's documented API requires an API token for calculation endpoints, so the public GitHub Pages version does not depend on private API credentials. It uses live CoinGecko prices plus editable/reference mining assumptions. Network hashrate, rewards, difficulty, and GPU algorithm performance remain editable because exact mining profitability requires chain-specific telemetry and miner-specific benchmark data.
 
 ## Run the Demo
 

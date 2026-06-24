@@ -40,6 +40,32 @@ button {
   padding: 32px 0;
 }
 
+.ticker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.ticker span {
+  align-items: baseline;
+  background: rgba(13, 24, 34, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.ticker strong {
+  color: #f5f8fb;
+}
+
+.ticker em {
+  font-style: normal;
+  font-weight: 800;
+}
+
 .topbar {
   align-items: flex-start;
   display: flex;
